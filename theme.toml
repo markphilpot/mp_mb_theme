@@ -1,0 +1,13 @@
+name = "mp_mb_theme"
+license = "MIT"
+licenselink = "https://github.com/markphilpot/mp_mb_theme/blob/master/LICENSE.md"
+description = "Hugo micro.blog theme for markphilpot.com"
+homepage = "https://github.com/markphilpot/mp_mb_theme"
+tags = []
+features = ["blog"]
+min_version = 0.91
+
+[author]
+  name = "Mark Philpot"
+  homepage = "https://markphilpot.com"
+  twitter = "https://twitter.com/mark_philpot"

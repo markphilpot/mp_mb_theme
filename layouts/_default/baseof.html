@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="{{ $.Site.Language }}">
+  <head>
+    {{ block "title" . }}
+    <title>
+      {{ if .IsHome }}{{ $.Site.Title }}{{ with $.Site.Params.Subtitle }} — {{ . }}{{ end }}{{ else }}{{ .Title }} :: {{
+      $.Site.Title }}{{ with $.Site.Params.Subtitle }} — {{ . }}{{ end }}{{ end }}
+    </title>
+    {{ end }} {{ partial "head.html" . }}
+  </head>
+  <body>
+    <div class="bg-gray-100 dark:bg-[#11001c] text-black dark:text-stone-300 min-h-screen">
+      {{ partial "header.html" . }} {{ partial "navigation.html" . }}
+
+      <div class="content">{{ block "main" . }} {{ end }}</div>
+
+      {{ block "footer" . }} {{ partial "footer.html" . }} {{ end }}
+    </div>
+
+    {{ range .Site.Params.plugins_js }}
+    <script src="{{ . }}"></script>
+    {{ end }}
+  </body>
+</html>

@@ -1,0 +1,75 @@
+{{ define "main" }}
+  <div class="post h-entry mx-auto max-w-[740px] px-8">
+    <div class="relative">
+      <div class="absolute top-0 left-0 -left-8 h-full w-full w-[100vw] bg-slate-200 dark:bg-[#272640] lg:-left-[2rem] lg:w-[calc(100%+4rem)] lg:rounded-3xl lg:drop-shadow-lg"></div>
+
+      <div class="relative my-16 py-8">
+    <h2 class="post-title"><a href="{{ .Permalink }}" class="p-name">{{ .Title | markdownify }}</a></h2>
+    <div class="post-meta mb-4 w-full text-right text-sm font-bold uppercase">
+      {{ with .Date | default nil }}
+        <span class="post-date transition hover:text-fuchsia-700 hover:dark:text-fuchsia-400">
+            {{ .Format ($.Site.Params.DateFormatSingle | default "January 2, 2006") }}
+        </span>
+      {{ end }}
+      {{ with .Params.Author }}<span class="post-author">— {{ $.Site.Params.WrittenBy | default "Written by" }} <span class="p-author h-card">{{ . }}</span></span>{{ end }}
+      {{ if $.Site.Params.ShowReadingTime }}
+        <span class="post-read-time">— {{ .ReadingTime }} {{ $.Site.Params.MinuteReadingTime | default "min read" }}</span>
+      {{ end }}
+    </div>
+
+    {{ if .Params.tags }}
+      <span class="post-tags">
+        {{ range .Params.tags }}
+          #<a href="{{ (urlize (printf "tags/%s" . )) | absURL }}/">{{ . }}</a>&nbsp;
+        {{ end }}
+      </span>
+    {{ end }}
+
+    {{ if .Params.Cover }}
+      {{ if .Params.UseRelativeCover }}
+        <img src="{{ (printf "%s%s" .Permalink .Params.Cover ) }}" class="post-cover" />
+      {{ else }}
+        <img src="{{ (urlize .Params.Cover | absURL) }}" class="post-cover" />
+      {{ end }}
+    {{ end }}
+
+    <div class="post-content prose prose-xl max-w-none prose-code:before:content-none prose-code:after:content-none dark:prose-invert">
+      {{ .Content }}
+    </div>
+    {{ if or .NextInSection .PrevInSection }}
+      <div class="pagination mt-6 text-center text-sm uppercase">
+        <div class="pagination__title">
+          <span class="pagination__title-h">{{ $.Site.Params.ReadOtherPosts | default "Read other posts" }}</span>
+          <hr />
+        </div>
+        <div class="pagination__buttons">
+          {{ if .NextInSection }}
+            <span class="button previous">
+              <a href="{{ .NextInSection.Permalink }}">
+                <span class="button__icon">←</span>
+                <span class="button__text">{{ .NextInSection.Title }}</span>
+              </a>
+            </span>
+          {{ end }}
+          {{ if .PrevInSection }}
+            <span class="button next">
+              <a href="{{ .PrevInSection.Permalink }}">
+                <span class="button__text">{{ .PrevInSection.Title }}</span>
+                <span class="button__icon">→</span>
+              </a>
+            </span>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+    </div>
+  </div>
+
+    {{ partial "comments.html" . }}
+    </div>
+
+{{ if .Site.Params.include_conversation }}
+<script type="text/javascript" src="https://micro.blog/conversation.js?url={{ .Permalink }}"></script>
+{{ end }}
+
+{{ end }}
